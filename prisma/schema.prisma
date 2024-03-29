@@ -25,7 +25,7 @@ model Pet {
 model Org {
   id            String @id @default(uuid())
   name          String
-  email         String
+  email         String @unique
   password_hash String
   address       String
   phone_number  String

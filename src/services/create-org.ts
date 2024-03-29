@@ -1,6 +1,7 @@
 import { OrgsRepository } from '@/repositories/orgs-repository'
 import { Org } from '@prisma/client'
 import { hash } from 'bcryptjs'
+import { EmailAlreadyExistsError } from './errors/email-already-exists-error'
 
 type CreateOrgServiceParams = {
 	name: string
@@ -25,6 +26,12 @@ export class CreateOrgService {
 		phoneNumber,
 	}: CreateOrgServiceParams): Promise<CreateOrgServiceResponse> {
 		const password_hash = await hash(password, 6)
+
+		const orgEmailAlreadyExists = await this.orgsRepository.findByEmail(email)
+
+		if (orgEmailAlreadyExists) {
+			throw new EmailAlreadyExistsError()
+		}
 
 		const org = await this.orgsRepository.create({
 			address,
