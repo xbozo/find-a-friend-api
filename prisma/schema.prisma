@@ -11,13 +11,13 @@ model Pet {
   id                 String   @id @default(uuid())
   name               String
   city               String
-  age                Int
+  age_in_months      Float
   energy_level       Int
   independency_level Int
   requirements       String[]
 
-  org    Org    @relation(fields: [org_id], references: [id])
-  org_id String
+  org       Org    @relation(fields: [org_email], references: [email])
+  org_email String
 
   @@map("pets")
 }
