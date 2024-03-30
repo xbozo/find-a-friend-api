@@ -1,9 +1,7 @@
-import { OrgsRepository } from '@/repositories/orgs-repository'
 import { PetsRepository } from '@/repositories/pets-repository'
 import { Pet } from '@prisma/client'
-import { OrgNotFoundError } from './errors/org-not-found'
 
-type CreatePetServiceParams = {
+type RegisterPetServiceParams = {
 	name: string
 	city: string
 	ageInMonths: number
@@ -13,12 +11,12 @@ type CreatePetServiceParams = {
 	orgEmail: string
 }
 
-type CreatePetServiceResponse = {
+type RegisterPetServiceResponse = {
 	pet: Pet
 }
 
-export class CreatePetService {
-	constructor(private petsRepository: PetsRepository, private orgsRepository: OrgsRepository) {}
+export class RegisterPetService {
+	constructor(private petsRepository: PetsRepository) {}
 
 	async execute({
 		ageInMonths,
@@ -28,13 +26,7 @@ export class CreatePetService {
 		name,
 		requirements,
 		orgEmail,
-	}: CreatePetServiceParams): Promise<CreatePetServiceResponse> {
-		const locateOrgByEmail = await this.orgsRepository.findByEmail(orgEmail)
-
-		if (!locateOrgByEmail) {
-			throw new OrgNotFoundError()
-		}
-
+	}: RegisterPetServiceParams): Promise<RegisterPetServiceResponse> {
 		const pet = await this.petsRepository.create({
 			age_in_months: ageInMonths,
 			city,

@@ -23,7 +23,7 @@ export const authenticateController = async (req: FastifyRequest, reply: Fastify
 			{},
 			{
 				sign: {
-					sub: org.id, // subject
+					sub: org.email, // subject
 				},
 			}
 		)
@@ -32,7 +32,7 @@ export const authenticateController = async (req: FastifyRequest, reply: Fastify
 			{},
 			{
 				sign: {
-					sub: org.id,
+					sub: org.email,
 					expiresIn: '7d',
 				},
 			}
