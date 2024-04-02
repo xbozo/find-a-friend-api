@@ -80,11 +80,11 @@ describe('Fetch pets service', () => {
 		await petsRepository.create({
 			age_in_months: 50,
 			city: 'New York',
-			energy_level: 3,
+			energy_level: 1,
 			independency_level: 1,
 			name: 'Example Pet 2',
-			animal: 'Cachorro',
-			animal_size: 3,
+			animal: 'Gato',
+			animal_size: 1,
 			requirements: ['Example Requirement 1', 'Example Requirement 2'],
 			org_id: 'new-org-id',
 		})
@@ -92,9 +92,9 @@ describe('Fetch pets service', () => {
 		const { pets } = await sut.execute({
 			city: 'New York',
 			ageInMonths: 50,
-			animal: 'Cachorro',
-			animalSize: 3,
-			energyLevel: 3,
+			animal: 'Gato',
+			animalSize: 1,
+			energyLevel: 1,
 			independencyLevel: 1,
 		})
 
@@ -102,10 +102,11 @@ describe('Fetch pets service', () => {
 		expect(pets).toEqual([
 			expect.objectContaining({
 				name: 'Example Pet 2',
-				animal: 'Cachorro',
-				animal_size: 3,
-				energy_level: 3,
+				animal: 'Gato',
+				animal_size: 1,
+				energy_level: 1,
 				independency_level: 1,
+				age_in_months: 50,
 			}),
 		])
 	})
