@@ -8,7 +8,7 @@ let petsRepository: InMemoryPetsRepository
 let orgsRepository: InMemoryOrgsRepository
 let sut: RegisterPetService
 
-describe('Create pet service', () => {
+describe('Register pet service', () => {
 	beforeEach(async () => {
 		petsRepository = new InMemoryPetsRepository()
 		orgsRepository = new InMemoryOrgsRepository()
@@ -20,6 +20,7 @@ describe('Create pet service', () => {
 			password_hash: await hash('123456', 6),
 			address: 'Example Org Address',
 			phone_number: '12000000000',
+			id: 'new-org-id',
 		})
 	})
 
@@ -30,11 +31,13 @@ describe('Create pet service', () => {
 			energyLevel: 2,
 			independencyLevel: 3,
 			name: 'Example Pet',
+			animal: 'Cachorro',
+			animalSize: 2,
 			requirements: ['Example Requirement 1', 'Example Requirement 2'],
-			orgEmail: 'contact@example.com',
+			orgId: 'new-org-id',
 		})
 
 		expect(pet.id).toBeTypeOf('string')
-		expect(pet.org_email).toBeTypeOf('string')
+		expect(pet.org_id).toBeTypeOf('string')
 	})
 })

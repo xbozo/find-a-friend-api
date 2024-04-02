@@ -7,7 +7,7 @@ type GetPetDetailsServiceParams = {
 }
 
 type GetPetDetailsServiceResponse = {
-	pet: Pet
+	pet: Pet | null
 }
 
 export class GetPetDetailsService {

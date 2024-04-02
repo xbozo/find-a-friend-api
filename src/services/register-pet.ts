@@ -4,11 +4,13 @@ import { Pet } from '@prisma/client'
 type RegisterPetServiceParams = {
 	name: string
 	city: string
+	animal: string
+	animalSize: number
 	ageInMonths: number
 	energyLevel: number
 	independencyLevel: number
 	requirements: string[]
-	orgEmail: string
+	orgId: string
 }
 
 type RegisterPetServiceResponse = {
@@ -25,7 +27,9 @@ export class RegisterPetService {
 		independencyLevel,
 		name,
 		requirements,
-		orgEmail,
+		animal,
+		animalSize,
+		orgId,
 	}: RegisterPetServiceParams): Promise<RegisterPetServiceResponse> {
 		const pet = await this.petsRepository.create({
 			age_in_months: ageInMonths,
@@ -34,7 +38,9 @@ export class RegisterPetService {
 			independency_level: independencyLevel,
 			name,
 			requirements,
-			org_email: orgEmail,
+			animal,
+			animal_size: animalSize,
+			org_id: orgId,
 		})
 
 		return {

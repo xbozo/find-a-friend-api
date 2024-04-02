@@ -7,23 +7,6 @@ Aplicação para visualizar animais p/ adoção.
 
 ## Requisitos funcionais
 
-** PET **
-
-- Cidade do pet,
-- Caracteristicas do pet
-  - Idade
-  - Nível de energia (1-5)
-  - Porte (1-3)
-  - Nível de independência (1-3)
-  - Requisitos p/ adoção (multiplos)
-  - Relacionado a uma org
-
-** ORG **
-
-- Endereço
-- WhatsApp
-- Pets relacionados
-
 - ✔️ Deve ser possível cadastrar um pet
 - 🚧 Deve ser possível listar todos os pets disponíveis para adoção em uma cidade
 - 🚧 Deve ser possível filtrar pets por suas características
