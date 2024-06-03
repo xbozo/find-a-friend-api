@@ -1,39 +1,35 @@
-import fastifyCookie from '@fastify/cookie'
-import fastifyJwt from '@fastify/jwt'
+import fastifyCors from '@fastify/cors'
+import { createClient } from '@supabase/supabase-js'
 import fastify from 'fastify'
 import { ZodError } from 'zod'
 import { env } from './env'
-import { orgsRoutes } from './http/controllers/orgs/routes'
-import { petsRoutes } from './http/controllers/pets/routes'
-
+import { addProduct } from './http/routes/products/add-product'
+import { deleteProduct } from './http/routes/products/delete-product'
+import { getProducts } from './http/routes/products/get-products'
+import { updateProduct } from './http/routes/products/update-product'
 export const app = fastify()
 
-app.register(fastifyJwt, {
-	secret: env.JWT_SECRET,
-	cookie: {
-		cookieName: 'refreshToken',
-		signed: false,
-	},
-	sign: {
-		expiresIn: '10m',
-	},
-})
+const supabaseUrl = 'https://mjqcfgnbljuntpygxmgp.supabase.co'
+const supabaseKey = env.SUPABASE_KEY
+export const supabase = createClient(supabaseUrl, supabaseKey)
 
-app.register(fastifyCookie)
+app.register(fastifyCors)
 
-app.register(orgsRoutes)
-app.register(petsRoutes)
+app.register(addProduct)
+app.register(getProducts)
+app.register(updateProduct)
+app.register(deleteProduct)
 
 app.setErrorHandler((error, _, reply) => {
-	if (error instanceof ZodError) {
-		return reply.status(400).send({ message: 'Validation error.', issues: error.format() })
-	}
+  if (error instanceof ZodError) {
+    return reply.status(400).send({ message: 'Validation error.', issues: error.format() })
+  }
 
-	if (env.NODE_ENV !== 'production') {
-		console.error(error)
-	} else {
-		// TODO: Here we should log to an external tool like DataDog/NewRelic/Sentry, etc.
-	}
+  if (env.NODE_ENV !== 'production') {
+    console.error(error)
+  } else {
+    // whatever
+  }
 
-	return reply.status(500).send({ message: 'Internal server error.' })
+  return reply.status(500).send({ message: 'Internal server error.' })
 })
